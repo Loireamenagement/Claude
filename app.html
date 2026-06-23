@@ -506,7 +506,7 @@ function pageHeader(title, sub, backScreen, backLabel, isT) {
 
 // ── HOME ───────────────────────────────────────────────────────────────
 function homeHTML(isT) {
-  const top = VEDETTES.slice(0, isT?4:3);
+  const top = VEDETTES.slice(0, isT?6:3);
   return `<div class="${isT?'scr-tablet':'scr'} fi">
     <div style="background:linear-gradient(145deg,#002880,#0040A0);padding:${isT?'40px 40px 32px':'24px 20px 20px'};position:relative;overflow:hidden">
       <div style="position:absolute;right:-30px;top:-30px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.04)"></div>
@@ -540,9 +540,9 @@ function homeHTML(isT) {
         <div style="${sf('font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#9A7020;font-weight:700')}">⭐ Vedettes du moment</div>
         <button onclick="goTo('vedettes')" style="background:none;border:none;cursor:pointer;font-size:11px;color:#0040A0;font-weight:600;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">Tout voir &rarr;</button>
       </div>
-      <div style="display:grid;grid-template-columns:${isT?'1fr 1fr':'1fr'};gap:${isT?12:8}px;width:100%;box-sizing:border-box">
+      <div style="display:flex;flex-direction:column;gap:${isT?10:8}px">
         ${top.map(v=>`
-        <div style="position:relative"><button class="card" onclick="goTo('vdet',{selV:VEDETTES.find(x=>x.id==='${v.id}')})" style="display:flex;align-items:center;gap:12px;padding:12px 14px;width:100%">
+        <div style="position:relative;width:100%;box-sizing:border-box"><button class="card" onclick="goTo('vdet',{selV:VEDETTES.find(x=>x.id==='${v.id}')})" style="display:flex;align-items:center;gap:12px;padding:12px 14px;width:100%">
           <div style="width:44px;height:44px;border-radius:8px;background:${v.bg};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px">⭐</div>
           <div style="flex:1;overflow:hidden">
             <div style="${sf('font-size:12px;font-weight:700;color:#1a1a1a;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis')}">${esc(v.nom)}</div>
@@ -577,10 +577,10 @@ function vedettesHTML(isT) {
     <div style="padding:10px 14px;overflow-x:auto;display:flex;gap:7px;scrollbar-width:none;background:#fdfcf9;border-bottom:1px solid #e8e0d4">
       ${cats.map(c=>`<button class="pill" onclick="S.vFilter='${c}';render()" style="background:${S.vFilter===c?'#0040A0':'#fdfcf9'};color:${S.vFilter===c?'#fff':'#6b6b6b'};border:1px solid ${S.vFilter===c?'#0040A0':'#e8e0d4'}">${esc(c)}</button>`).join('')}
     </div>
-    <div style="display:grid;grid-template-columns:${isT?'1fr 1fr':'1fr'};gap:${isT?16:10}px;padding:${isT?'20px 32px 24px':'12px 14px 14px'}">
+    <div style="display:grid;grid-template-columns:${isT?'1fr 1fr':'1fr'};gap:${isT?16:10}px;padding:${isT?'20px 32px 24px':'12px 14px 14px'};width:100%;box-sizing:border-box">
       ${liste.map(v=>{
         const prest=PRESTATIONS.find(p=>p.id===v.prestation);
-        return `<div style="position:relative"><button class="card" onclick="goTo('vdet',{selV:VEDETTES.find(x=>x.id==='${v.id}')})" style="width:100%">
+        return `<div style="position:relative;width:100%;box-sizing:border-box"><button class="card" onclick="goTo('vdet',{selV:VEDETTES.find(x=>x.id==='${v.id}')})" style="width:100%">
           <div style="background:${v.bg};padding:${isT?'18px 18px 12px':'14px 16px 10px'};display:flex;gap:12px;align-items:flex-start">
             <div style="flex:1">
               <div style="display:flex;gap:6px;align-items:center;margin-bottom:8px;flex-wrap:wrap">
@@ -678,10 +678,10 @@ function prestationsHTML(isT) {
     <div style="padding:10px 14px;overflow-x:auto;display:flex;gap:7px;scrollbar-width:none;background:#fdfcf9;border-bottom:1px solid #e8e0d4">
       ${cats.map(c=>`<button class="pill" onclick="S.pFilter='${c}';render()" style="background:${S.pFilter===c?'#0040A0':'#fdfcf9'};color:${S.pFilter===c?'#fff':'#6b6b6b'};border:1px solid ${S.pFilter===c?'#0040A0':'#e8e0d4'}">${esc(c)}</button>`).join('')}
     </div>
-    <div style="display:grid;grid-template-columns:${isT?'repeat(3,1fr)':'1fr 1fr'};gap:${isT?16:10}px;padding:${isT?'20px 32px 24px':'12px 14px 14px'}">
+    <div style="display:grid;grid-template-columns:${isT?'repeat(3,1fr)':'1fr 1fr'};gap:${isT?16:10}px;padding:${isT?'20px 32px 24px':'12px 14px 14px'};width:100%;box-sizing:border-box;width:100%;box-sizing:border-box">
       ${liste.map(p=>`
-      <div style="position:relative">
-        <div style="position:relative">
+      <div style="position:relative;width:100%;box-sizing:border-box">
+        <div style="position:relative;width:100%;box-sizing:border-box">
         <button class="card" onclick="goTo('pdet',{selP:PRESTATIONS.find(x=>x.id==='${p.id}'),pTab:'presentation'})" style="width:100%">
           <div style="background:${p.bg};padding:${isT?'22px 18px 16px':'18px 14px 14px'};display:flex;flex-direction:column;gap:9px">
             <div style="color:${p.col};width:${isT?36:30}px;height:${isT?36:30}px">${ICONS[p.id]||''}</div>
@@ -813,9 +813,9 @@ function materiauxHTML(isT) {
     <div style="background:#fdfcf9;border-bottom:1px solid #e8e0d4;overflow-x:auto;display:flex;scrollbar-width:none;padding:${isT?'0 20px':'0'}">
       ${MAT_CATS.map((c,i)=>`<button class="dtab" onclick="S.matCat=${i};render()" style="color:${S.matCat===i?'#8b5e3c':'#6b6b6b'};border-bottom-color:${S.matCat===i?'#8b5e3c':'transparent'};white-space:nowrap;font-size:${isT?12:10}px;padding:${isT?'14px 20px':'11px 4px'}">${esc(c.label)}</button>`).join('')}
     </div>
-    <div style="display:grid;grid-template-columns:${isT?'repeat(4,1fr)':'1fr 1fr'};gap:${isT?16:10}px;padding:${isT?'20px 32px 24px':'12px 14px 14px'}">
+    <div style="display:grid;grid-template-columns:${isT?'repeat(4,1fr)':'1fr 1fr'};gap:${isT?16:10}px;padding:${isT?'20px 32px 24px':'12px 14px 14px'};width:100%;box-sizing:border-box">
       ${cat.items.map((m,i)=>`
-      <div style="position:relative"><button class="card" onclick="goTo('mdet',{selM:MAT_CATS[${S.matCat}].items[${i}]})" style="width:100%">
+      <div style="position:relative;width:100%;box-sizing:border-box"><button class="card" onclick="goTo('mdet',{selM:MAT_CATS[${S.matCat}].items[${i}]})" style="width:100%">
         <div style="height:${isT?100:72}px;background:linear-gradient(135deg,${m.c1},${m.c2});position:relative;overflow:hidden">
           <div style="position:absolute;bottom:8px;right:10px;width:20px;height:20px;border-radius:3px;background:${m.c1};border:2px solid rgba(255,255,255,.5)"></div>
         </div>
@@ -887,7 +887,7 @@ function galerieHTML(isT) {
     <div style="padding:10px 14px;overflow-x:auto;display:flex;gap:7px;scrollbar-width:none;background:#fdfcf9;border-bottom:1px solid #e8e0d4">
       ${cats.map(c=>`<button class="pill" onclick="S.galFilter='${c.id}';render()" style="background:${S.galFilter===c.id?'#0040A0':'#fdfcf9'};color:${S.galFilter===c.id?'#fff':'#6b6b6b'};border:1px solid ${S.galFilter===c.id?'#0040A0':'#e8e0d4'}">${esc(c.lb)}</button>`).join('')}
     </div>
-    <div style="display:grid;grid-template-columns:${isT?'repeat(3,1fr)':'1fr 1fr'};gap:${isT?16:10}px;padding:${isT?'20px 32px 24px':'12px 14px 14px'}">
+    <div style="display:grid;grid-template-columns:${isT?'repeat(3,1fr)':'1fr 1fr'};gap:${isT?16:10}px;padding:${isT?'20px 32px 24px':'12px 14px 14px'};width:100%;box-sizing:border-box;width:100%;box-sizing:border-box">
       ${liste.map((g,i)=>{
         const pr = PRESTATIONS.find(p=>p.id===g.cat);
         const isClickable = g.fiche;
