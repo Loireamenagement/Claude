@@ -507,17 +507,18 @@ function pageHeader(title, sub, backScreen, backLabel, isT) {
 // ── HOME ───────────────────────────────────────────────────────────────
 function homeHTML(isT) {
   const top = VEDETTES.slice(0, isT?6:3);
+  const PRIX_COL = {'€':'#60A040','€€':'#9A7020','€€€':'#C07820','€€€€':'#B04010'};
   return `<div class="${isT?'scr-tablet':'scr'} fi">
     <div style="background:linear-gradient(145deg,#002880,#0040A0);padding:${isT?'40px 40px 32px':'24px 20px 20px'};position:relative;overflow:hidden">
       <div style="position:absolute;right:-30px;top:-30px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.04)"></div>
       ${!isT?`<div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
-        <div style="width:72px;height:54px;background:#fff;border-radius:8px;padding:4px 6px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.2)">${logoSVG(62,44)}</div>
+        <div style="width:48px;height:48px;border-radius:10px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:22px">🏡</div>
         <div>
-          <div style="${sf('font-size:16px;font-weight:700;color:#fff;line-height:1.1')}">LOIRE AMÉNAGEMENT</div>
-          <div style="${sf('font-size:11px;color:rgba(255,255,255,.7);font-style:italic;margin-top:3px')}">vivez vos extérieurs !</div>
+          <div style="${pf('font-size:13px;color:#fff;font-weight:700')}">LOIRE AMÉNAGEMENT</div>
+          <div style="${sf('font-size:10px;color:rgba(255,255,255,.7);font-weight:300')}">vivez vos extérieurs !</div>
         </div>
       </div>`:`<h1 style="${pf('font-size:38px;color:#fff;line-height:1.1;margin-bottom:10px')}">Bibliothèque commerciale</h1>`}
-      <p style="${sf(`font-size:${isT?14:11}px;color:rgba(255,255,255,.75);font-weight:300;line-height:1.6;margin-bottom:14px;max-width:${isT?560:300}px`)}">Création, aménagement et entretien d'espaces extérieurs sur mesure.</p>
+      <p style="${sf(`font-size:${isT?14:11}px;color:rgba(255,255,255,.75);font-weight:300;line-height:1.5;margin-bottom:14px;max-width:${isT?560:300}px`)}">Création, aménagement et entretien d'espaces extérieurs sur mesure.</p>
       <div style="display:flex;gap:6px;flex-wrap:wrap">
         ${['Création','Aménagement','Entretien','Maçonnerie'].map(t=>`<span class="chip" style="background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);font-size:${isT?12:10}px">${t}</span>`).join('')}
       </div>
@@ -530,7 +531,7 @@ function homeHTML(isT) {
          ['⊞','Réalisations','Galerie','galerie','#f4f0e8','#6b4c2a']].map(([ic,lb,sub,sc,bg,col])=>`
       <button onclick="goTo('${sc}')" style="width:100%;background:${bg};border:none;border-radius:14px;padding:${isT?'20px 18px':'15px 12px'};text-align:left;cursor:pointer">
         <div style="font-size:${isT?28:20}px;margin-bottom:${isT?10:6}px;color:${col}">${ic}</div>
-        <div style="${sf(`font-size:${isT?14:12}px;font-weight:700;color:#1a1a1a;margin-bottom:2px`)}">${lb}</div>
+        <div style="${pf(`font-size:${isT?14:12}px;font-weight:700;color:#1a1a1a;margin-bottom:2px`)}">${lb}</div>
         <div style="${sf(`font-size:${isT?12:10}px;color:#6b6b6b;font-weight:300`)}">${sub}</div>
       </button>`).join('')}
     </div>
@@ -541,19 +542,14 @@ function homeHTML(isT) {
         <button onclick="goTo('vedettes')" style="background:none;border:none;cursor:pointer;font-size:11px;color:#0040A0;font-weight:600;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">Tout voir &rarr;</button>
       </div>
       <div style="display:flex;flex-direction:column;gap:${isT?10:8}px">
-        ${top.map(v=>`
-        <div style="position:relative;width:100%;box-sizing:border-box"><button class="card" onclick="goTo('vdet',{selV:VEDETTES.find(x=>x.id==='${v.id}')})" style="display:flex;align-items:center;gap:12px;padding:12px 14px;width:100%">
+        ${top.map(v=>`<button class="card" onclick="goTo('vdet',{selV:VEDETTES.find(x=>x.id==='${v.id}')})" style="display:flex;align-items:center;gap:12px;padding:12px 14px;width:100%">
           <div style="width:44px;height:44px;border-radius:8px;background:${v.bg};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px">⭐</div>
           <div style="flex:1;overflow:hidden">
             <div style="${sf('font-size:12px;font-weight:700;color:#1a1a1a;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis')}">${esc(v.nom)}</div>
             <div style="${sf('font-size:10px;color:#6b6b6b;font-weight:300')}">${esc(v.prixDetail)}</div>
           </div>
-          <div style="${sf(`font-size:12px;font-weight:700;color:${PRIX_COL[v.prix]};flex-shrink:0`)}">${v.prix}</div>
-        </button>
-          <button onclick="event.stopPropagation();addVedetteToPanier('${v.id}')" style="position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:50%;border:2px solid ${S.panier.find(x=>x.id==='vedette_'+v.id)?'#9A7020':'rgba(0,0,0,.15)'};background:${S.panier.find(x=>x.id==='vedette_'+v.id)?'#9A7020':'rgba(255,255,255,.9)'};cursor:pointer;font-size:10px;font-weight:700;color:${S.panier.find(x=>x.id==='vedette_'+v.id)?'#fff':'#999'}">${S.panier.find(x=>x.id==='vedette_'+v.id)?'✓':'+'}</button>
-          </div>
-        <button onclick="event.stopPropagation();addVedetteToPanier('${v.id}')" style="position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:50%;border:2px solid ${S.panier.find(x=>x.id==='vedette_'+v.id)?'#9A7020':'rgba(0,0,0,.15)'};background:${S.panier.find(x=>x.id==='vedette_'+v.id)?'#9A7020':'rgba(255,255,255,.9)'};cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:${S.panier.find(x=>x.id==='vedette_'+v.id)?'#fff':'#999'};box-shadow:0 1px 4px rgba(0,0,0,.15)">${S.panier.find(x=>x.id==='vedette_'+v.id)?'✓':'+'}</button>
-        </div>`).join('')}
+          <div style="font-size:12px;font-weight:700;color:${PRIX_COL[v.prix]||'#9A7020'};flex-shrink:0">${v.prix}</div>
+        </button>`).join('')}
       </div>
     </div>
 
@@ -568,7 +564,7 @@ function homeHTML(isT) {
   </div>`;
 }
 
-// ── VEDETTES LIST ──────────────────────────────────────────────────────
+
 function vedettesHTML(isT) {
   const cats = ['Tous',...[...new Set(VEDETTES.map(v=>PRESTATIONS.find(p=>p.id===v.prestation)?.cat||''))]];
   const liste = S.vFilter==='Tous' ? VEDETTES : VEDETTES.filter(v=>PRESTATIONS.find(p=>p.id===v.prestation)?.cat===S.vFilter);
