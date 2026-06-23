@@ -1158,8 +1158,24 @@ function render() {
   const isT = isTablet();
   const app = document.getElementById('app');
   if(isT) {
-    app.className = 'app-tablet';
-    app.innerHTML = sidebarHTML() + getScreenHTML(true);
+    const SW = 230;
+    const VW = window.innerWidth;
+    const VH = window.innerHeight;
+    app.className = '';
+    app.style.cssText = 'position:relative;width:'+VW+'px;height:'+VH+'px;overflow:hidden;background:#f5f0e8;display:block';
+    // Force sidebar and content width via inline styles in the HTML
+    const sidebarH = sidebarHTML().replace(
+      'class="sidebar"',
+      'style="position:absolute;left:0;top:0;width:'+SW+'px;height:100%;z-index:10;background:linear-gradient(180deg,#001A60 0%,#0040A0 60%,#0050B8 100%);display:flex;flex-direction:column;box-shadow:2px 0 20px rgba(0,0,0,.15);overflow-y:auto"'
+    );
+    const contentH = getScreenHTML(true).replace(
+      'class="scr-tablet fi"',
+      'style="position:absolute;left:'+SW+'px;top:0;width:'+( VW-SW )+'px;height:100%;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;background:#f5f0e8;animation:fi .18s ease both"'
+    ).replace(
+      'class="split"',
+      'style="position:absolute;left:'+SW+'px;top:0;width:'+( VW-SW )+'px;height:100%;display:flex;overflow:hidden"'
+    );
+    app.innerHTML = sidebarH + contentH;
   } else {
     app.className = 'app-phone';
     app.innerHTML = getScreenHTML(false) + bottomNavHTML();
