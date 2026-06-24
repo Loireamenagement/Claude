@@ -16,7 +16,7 @@ html,body{height:100%;max-width:100%;overflow-x:hidden;background:#e8e8e8;font-f
 .app-phone{max-width:430px;margin:0 auto;height:100vh;background:#f5f0e8;box-shadow:0 0 40px rgba(0,0,0,.3);display:flex;flex-direction:column;overflow:hidden;position:relative}
 .app-tablet{display:block;width:100%;height:100vh;background:#f5f0e8;overflow:hidden;position:relative;-webkit-tap-highlight-color:transparent}
 #sidebar-wrap{position:absolute;left:0;top:0;width:230px;height:100%;z-index:10;overflow:hidden}
-#content-wrap{position:absolute;left:230px;top:0;right:0;bottom:0;overflow:hidden;-webkit-tap-highlight-color:transparent;outline:none;border:none}
+#content-wrap{position:absolute;left:230px;top:0;right:0;bottom:0;overflow:hidden;background:#f5f0e8;-webkit-tap-highlight-color:transparent;outline:none;border:none}
 .scr{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:70px}
 .scr-tablet{position:absolute;left:230px;top:0;right:0;bottom:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .scr::-webkit-scrollbar,.scr-tablet::-webkit-scrollbar{width:3px}
@@ -40,6 +40,8 @@ html,body{height:100%;max-width:100%;overflow-x:hidden;background:#e8e8e8;font-f
 .split-right{flex:1;overflow-y:auto;overflow-x:hidden}
 @keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .fi{animation:fi .18s ease both}
+@keyframes fi2{from{opacity:0}to{opacity:1}}
+.fi2{animation:fi2 .18s ease both}
 @media(max-width:430px){.bnav{width:100%;left:0;transform:none}}
 </style>
 </head>
@@ -510,7 +512,7 @@ function pageHeader(title, sub, backScreen, backLabel, isT) {
 function homeHTML(isT) {
   const top = VEDETTES.slice(0, isT?6:3);
   const PRIX_COL = {'€':'#60A040','€€':'#9A7020','€€€':'#C07820','€€€€':'#B04010'};
-  return `<div class="${isT?'scr-tablet':'scr'} fi">
+  return `<div class="${isT?'scr-tablet':'scr'} fi2">
     <div style="background:#FF0000;height:8px;width:100%"></div>
     <div style="background:linear-gradient(145deg,#002880,#0040A0);padding:${isT?'40px 40px 32px':'24px 20px 20px'};position:relative;overflow:hidden">
       <div style="position:absolute;right:-30px;top:-30px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.04)"></div>
@@ -571,7 +573,7 @@ function homeHTML(isT) {
 function vedettesHTML(isT) {
   const cats = ['Tous',...[...new Set(VEDETTES.map(v=>PRESTATIONS.find(p=>p.id===v.prestation)?.cat||''))]];
   const liste = S.vFilter==='Tous' ? VEDETTES : VEDETTES.filter(v=>PRESTATIONS.find(p=>p.id===v.prestation)?.cat===S.vFilter);
-  return `<div class="${isT?'scr-tablet':'scr'} fi">
+  return `<div class="${isT?'scr-tablet':'scr'} fi2">
     ${pageHeader('Prestations Vedettes', `${liste.length} fiches phares · Arguments · Prix indicatifs`, null, null, isT)}
     <div style="padding:10px 14px;overflow-x:auto;display:flex;gap:7px;scrollbar-width:none;background:#fdfcf9;border-bottom:1px solid #e8e0d4">
       ${cats.map(c=>`<button class="pill" onclick="S.vFilter='${c}';render()" style="background:${S.vFilter===c?'#0040A0':'#fdfcf9'};color:${S.vFilter===c?'#fff':'#6b6b6b'};border:1px solid ${S.vFilter===c?'#0040A0':'#e8e0d4'}">${esc(c)}</button>`).join('')}
@@ -665,14 +667,14 @@ function vedetteDetailHTML(isT) {
       <div class="split-right" style="background:#f5f0e8">${contentHTML}</div>
     </div>`;
   }
-  return `<div class="${isT?'scr-tablet':'scr'} fi">${headerHTML}${contentHTML}</div>`;
+  return `<div class="${isT?'scr-tablet':'scr'} fi2">${headerHTML}${contentHTML}</div>`;
 }
 
 // ── PRESTATIONS LIST ───────────────────────────────────────────────────
 function prestationsHTML(isT) {
   const cats = ['Tous',...[...new Set(PRESTATIONS.map(p=>p.cat))]];
   const liste = S.pFilter==='Tous' ? PRESTATIONS : PRESTATIONS.filter(p=>p.cat===S.pFilter);
-  return `<div class="${isT?'scr-tablet':'scr'} fi">
+  return `<div class="${isT?'scr-tablet':'scr'} fi2">
     ${pageHeader('Nos Prestations','9 expertises · Fiches détaillées',null,null,isT)}
     <div style="padding:10px 14px;overflow-x:auto;display:flex;gap:7px;scrollbar-width:none;background:#fdfcf9;border-bottom:1px solid #e8e0d4">
       ${cats.map(c=>`<button class="pill" onclick="S.pFilter='${c}';render()" style="background:${S.pFilter===c?'#0040A0':'#fdfcf9'};color:${S.pFilter===c?'#fff':'#6b6b6b'};border:1px solid ${S.pFilter===c?'#0040A0':'#e8e0d4'}">${esc(c)}</button>`).join('')}
@@ -789,7 +791,7 @@ function prestationDetailHTML(isT) {
       <div class="split-right" style="background:#f5f0e8">${tabs}<div style="padding:24px 28px">${tabContent}<div style="height:16px"></div></div></div>
     </div>`;
   }
-  return `<div class="${isT?'scr-tablet':'scr'} fi">
+  return `<div class="${isT?'scr-tablet':'scr'} fi2">
     ${leftPanel}
     ${tabs}
     <div style="padding:16px 16px">${tabContent}</div>
@@ -803,7 +805,7 @@ function prestationDetailHTML(isT) {
 
 function materiauxHTML(isT) {
   const cat = MAT_CATS[S.matCat];
-  return `<div class="${isT?'scr-tablet':'scr'} fi">
+  return `<div class="${isT?'scr-tablet':'scr'} fi2">
     <div style="background:linear-gradient(135deg,#3a2a10,#6b4c2a);padding:${isT?'32px 40px 24px':'24px 20px 16px'}">
       <h2 style="${pf(`font-size:${isT?34:26}px;color:#fff;margin-bottom:4px`)}">Catalogue Matériaux</h2>
       <p style="${sf(`font-size:${isT?14:12}px;color:#c4b49a;font-weight:300`)}">Échantillons et fiches techniques</p>
@@ -832,7 +834,7 @@ function materiauxHTML(isT) {
 function matDetailHTML(isT) {
   const m = S.selM;
   if(!m) return '<div></div>';
-  return `<div class="${isT?'scr-tablet':'scr'} fi">
+  return `<div class="${isT?'scr-tablet':'scr'} fi2">
     <div style="background:linear-gradient(155deg,${m.c1},${m.c2});padding:${isT?'40px 40px 48px':'20px 20px 30px'};min-height:${isT?220:160}px;position:relative;overflow:hidden">
       <button class="back-btn" onclick="goTo('materiaux')">&larr; Retour</button>
       <div style="position:absolute;bottom:14px;right:18px;display:flex;gap:7px">
@@ -880,7 +882,7 @@ function matDetailHTML(isT) {
 function galerieHTML(isT) {
   const cats = [{id:'all',lb:'Tout'},...[...new Set(GALERIE.map(g=>g.cat))].map(c=>({id:c,lb:(PRESTATIONS.find(p=>p.id===c)?.nom.split(' ')[0]||c)}))];
   const liste = S.galFilter==='all' ? GALERIE : GALERIE.filter(g=>g.cat===S.galFilter);
-  return `<div class="${isT?'scr-tablet':'scr'} fi">
+  return `<div class="${isT?'scr-tablet':'scr'} fi2">
     ${pageHeader('Réalisations','Chantiers · Photos · Fiches détaillées',null,null,isT)}
     <div style="padding:10px 14px;overflow-x:auto;display:flex;gap:7px;scrollbar-width:none;background:#fdfcf9;border-bottom:1px solid #e8e0d4">
       ${cats.map(c=>`<button class="pill" onclick="S.galFilter='${c.id}';render()" style="background:${S.galFilter===c.id?'#0040A0':'#fdfcf9'};color:${S.galFilter===c.id?'#fff':'#6b6b6b'};border:1px solid ${S.galFilter===c.id?'#0040A0':'#e8e0d4'}">${esc(c.lb)}</button>`).join('')}
@@ -914,7 +916,7 @@ function chantierDetailHTML(isT) {
   const g = S.selC;
   if(!g) return '<div></div>';
   const pr = PRESTATIONS.find(p=>p.id===g.cat);
-  return `<div class="${isT?'scr-tablet':'scr'} fi">
+  return `<div class="${isT?'scr-tablet':'scr'} fi2">
     <div style="background:${g.col2||'#0040A0'};padding:${isT?'32px 40px 28px':'20px 20px 28px'};position:relative;overflow:hidden;min-height:${isT?180:160}px">
       <button class="back-btn" onclick="goTo('galerie')">&larr; Réalisations</button>
       <div style="margin-top:14px">
