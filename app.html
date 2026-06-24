@@ -14,9 +14,9 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;max-width:100%;overflow-x:hidden;background:#e8e8e8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
 .app-phone{max-width:430px;margin:0 auto;height:100vh;background:#f5f0e8;box-shadow:0 0 40px rgba(0,0,0,.3);display:flex;flex-direction:column;overflow:hidden;position:relative}
-.app-tablet{display:block;width:100%;height:100vh;background:#f5f0e8;overflow:hidden;position:relative}
-#sidebar-wrap{position:absolute;left:0;top:0;width:230px;height:100%;z-index:10}
-#content-wrap{position:absolute;left:230px;top:0;right:0;bottom:0;overflow:hidden}
+.app-tablet{display:block;width:100%;height:100vh;background:#f5f0e8;overflow:hidden;position:relative;-webkit-tap-highlight-color:transparent}
+#sidebar-wrap{position:absolute;left:0;top:0;width:230px;height:100%;z-index:10;overflow:hidden}
+#content-wrap{position:absolute;left:230px;top:0;right:0;bottom:0;overflow:hidden;-webkit-tap-highlight-color:transparent;outline:none;border:none}
 .scr{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:70px}
 .scr-tablet{position:absolute;left:230px;top:0;right:0;bottom:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .scr::-webkit-scrollbar,.scr-tablet::-webkit-scrollbar{width:3px}
@@ -545,14 +545,14 @@ function homeHTML(isT) {
         <button onclick="goTo('vedettes')" style="background:none;border:none;cursor:pointer;font-size:11px;color:#0040A0;font-weight:600;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">Tout voir &rarr;</button>
       </div>
       <div style="display:flex;flex-direction:column;gap:${isT?10:8}px">
-        ${top.map(v=>`<button class="card" onclick="goTo('vdet',{selV:VEDETTES.find(x=>x.id==='${v.id}')})" style="display:flex;align-items:center;gap:12px;padding:12px 14px;width:100%">
+        ${top.map(v=>`<div style="position:relative;width:100%"><button class="card" onclick="goTo('vdet',{selV:VEDETTES.find(x=>x.id==='${v.id}')})" style="display:flex;align-items:center;gap:12px;padding:12px 14px;width:100%">
           <div style="width:44px;height:44px;border-radius:8px;background:${v.bg};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px">⭐</div>
           <div style="flex:1;overflow:hidden">
             <div style="${sf('font-size:12px;font-weight:700;color:#1a1a1a;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis')}">${esc(v.nom)}</div>
             <div style="${sf('font-size:10px;color:#6b6b6b;font-weight:300')}">${esc(v.prixDetail)}</div>
           </div>
-          <div style="font-size:12px;font-weight:700;color:${PRIX_COL[v.prix]||'#9A7020'};flex-shrink:0">${v.prix}</div>
-        </button>`).join('')}
+          <div style="font-size:12px;font-weight:700;color:${PRIX_COL[v.prix]||'#9A7020'};flex-shrink:0;margin-right:32px">${v.prix}</div>
+        </button><button onclick="event.stopPropagation();addVedetteToPanier('${v.id}')" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;border:1.5px solid ${S.panier.find(x=>x.id==='vedette_'+v.id)?'#9A7020':'rgba(0,0,0,.2)'};background:${S.panier.find(x=>x.id==='vedette_'+v.id)?'#9A7020':'rgba(255,255,255,.9)'};cursor:pointer;font-size:10px;font-weight:700;color:${S.panier.find(x=>x.id==='vedette_'+v.id)?'#fff':'#666'}">${S.panier.find(x=>x.id==='vedette_'+v.id)?'✓':'+'}</button></div>`).join('')}
       </div>
     </div>
 
