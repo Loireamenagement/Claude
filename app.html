@@ -714,7 +714,7 @@ function prestationDetailHTML(isT) {
   const p = S.selP;
   if(!p) return '<div></div>';
   // Resolve photos from external PHOTOS_DB or inline
-  const pPhotos = (typeof PHOTOS_DB!=="undefined"&&PHOTOS_DB[p.id]&&PHOTOS_DB[p.id].length) ? PHOTOS_DB[p.id] : (pPhotos||[]);
+  const pPhotos = (typeof PHOTOS_DB!=="undefined"&&PHOTOS_DB[p.id]&&PHOTOS_DB[p.id].length) ? PHOTOS_DB[p.id] : (p.photos||[]);
   const vedettes = VEDETTES.filter(v=>v.prestation===p.id);
   const matCatIdx = PRESTA_MAT_MAP[p.id];
   const matItems = matCatIdx !== undefined ? MAT_CATS[matCatIdx].items : [];
